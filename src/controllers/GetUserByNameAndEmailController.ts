@@ -7,7 +7,7 @@ class GetUserByNameAndEmailController{
 
     const userbynameandemail = new GetUserByNameAndEmailUseCase();
 
-    const result = await userbynameandemail.execute(query);
+    const result = await userbynameandemail.execute({});
 
     if (result instanceof Error) {
       return response.status(400).json(result.message);
