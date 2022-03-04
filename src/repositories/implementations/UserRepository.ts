@@ -10,7 +10,6 @@ import { IDeleteUserDTO } from "../../dtos/IDeleteUserDTO";
 import { IFindByNameAndEmailDTO } from "../../dtos/IFindByNameAndEmailDTO";
 
 class UserRepository implements IUserRepository {
-  
   private repository: Repository<User>;
 
   constructor() {
@@ -61,30 +60,27 @@ class UserRepository implements IUserRepository {
     return firstUser;
   }
 
-  async deleteUser(payload:IDeleteUserDTO): Promise<void> {
-
+  async deleteUser(payload: IDeleteUserDTO): Promise<void> {
     await getConnection()
-    .createQueryBuilder()
-    .delete()
-    .from(User)
-    .where("id = :id", { id: payload.id })
-    .execute();
+      .createQueryBuilder()
+      .delete()
+      .from(User)
+      .where("id = :id", { id: payload.id })
+      .execute();
   }
 
-  async findByNameAndEmail(payload: IFindByNameAndEmailDTO): Promise<User[]>{
+  async findByNameAndEmail(payload: IFindByNameAndEmailDTO): Promise<User[]> {
     const { query } = payload;
 
-     return await getConnection('user')
-    .createQueryBuilder()
-    .where(
-      `LOWER(user.name) LIKE :query 
+    return await getConnection("user")
+      .createQueryBuilder()
+      .where(
+        `LOWER(user.name) LIKE :query 
       OR LOWER(user.email) LIKE :query`,
-      { query: `%${query.toLowerCase()}%` },
-    )
-    .getMany()
-
+        { query: `%${query.toLowerCase()}%` }
+      )
+      .getMany();
   }
- 
 }
 
 export { UserRepository };

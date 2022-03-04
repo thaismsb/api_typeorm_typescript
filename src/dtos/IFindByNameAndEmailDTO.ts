@@ -1,4 +1,4 @@
-type IFindByNameAndEmailDTO  = {
+type IFindByNameAndEmailDTO = {
   query: string;
 };
 
