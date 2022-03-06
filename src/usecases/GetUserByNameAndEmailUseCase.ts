@@ -1,14 +1,17 @@
-import { arrayBuffer } from "node:stream/consumers";
 import { IFindByNameAndEmailDTO } from "../dtos/IFindByNameAndEmailDTO";
 import { User } from "../entities/User";
 import { UserRepository } from "../repositories/implementations/UserRepository";
 
 export class GetUserByNameAndEmailUseCase {
-  async execute({ query }: IFindByNameAndEmailDTO): Promise<User[]> {
+  async execute({ name}: IFindByNameAndEmailDTO): Promise<User[] | Error> {
     const userRepository = new UserRepository();
 
-    const array = await userRepository.findByNameAndEmail({ query });
+    const search = await userRepository.findByNameAndEmail({ name });
 
-    return array;
+    if (!search) {
+      return new Error("No results found");
+    }
+
+    return search;
   }
 }

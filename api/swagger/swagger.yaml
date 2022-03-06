@@ -1,0 +1,132 @@
+{
+  "swagger": "2.0",
+  "info": { "version": "1.0.0", "title": "REST API", "description": "" },
+  "host": "localhost:2016",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths":
+    {
+      "/users":
+        {
+          "post":
+            {
+              "description": "",
+              "parameters":
+                [
+                  {
+                    "name": "body",
+                    "in": "body",
+                    "schema":
+                      {
+                        "type": "object",
+                        "properties":
+                          {
+                            "name": { "example": "any" },
+                            "email": { "example": "any" },
+                            "birthDate": { "example": "any" },
+                            "userName": { "example": "any" },
+                          },
+                      },
+                  },
+                ],
+              "responses":
+                {
+                  "200": { "description": "OK" },
+                  "400": { "description": "Bad Request" },
+                },
+            },
+        },
+      "/users/{id}":
+        {
+          "get":
+            {
+              "description": "",
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string",
+                  },
+                ],
+              "responses":
+                {
+                  "200": { "description": "OK" },
+                  "400": { "description": "Bad Request" },
+                },
+            },
+        },
+      "/users/update/{id}":
+        {
+          "put":
+            {
+              "description": "",
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string",
+                  },
+                  {
+                    "name": "body",
+                    "in": "body",
+                    "schema":
+                      {
+                        "type": "object",
+                        "properties":
+                          {
+                            "name": { "example": "any" },
+                            "email": { "example": "any" },
+                            "birthDate": { "example": "any" },
+                            "userName": { "example": "any" },
+                          },
+                      },
+                  },
+                ],
+              "responses":
+                {
+                  "200": { "description": "OK" },
+                  "400": { "description": "Bad Request" },
+                },
+            },
+        },
+      "/users/delete/{id}":
+        {
+          "delete":
+            {
+              "description": "",
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string",
+                  },
+                ],
+              "responses":
+                {
+                  "204": { "description": "No Content" },
+                  "400": { "description": "Bad Request" },
+                },
+            },
+        },
+      "/users/search":
+        {
+          "get":
+            {
+              "description": "",
+              "parameters":
+                [{ "name": "query", "in": "query", "type": "string" }],
+              "responses":
+                {
+                  "200": { "description": "OK" },
+                  "400": { "description": "Bad Request" },
+                },
+            },
+        },
+    },
+}

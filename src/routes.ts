@@ -26,6 +26,6 @@ routes.post(
 routes.get("/users/:id", new GetUserByIdController().handle);
 routes.put("/users/update/:id", new UpdateUserController().handle);
 routes.delete("/users/delete/:id", new DeleteUserController().handle);
-routes.get("/users/search", new GetUserByNameAndEmailController().handle);
+routes.get("/users", new GetUserByNameAndEmailController().handle);
 
 export { routes };
