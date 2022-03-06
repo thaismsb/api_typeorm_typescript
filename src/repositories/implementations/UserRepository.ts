@@ -70,17 +70,24 @@ class UserRepository implements IUserRepository {
   }
 
   async findByNameAndEmail(payload: IFindByNameAndEmailDTO): Promise<User[]> {
-    const { query } = payload;
 
-    return await getConnection("user")
-      .createQueryBuilder()
+     //retorna todos
+    // return await this.repository
+    // .createQueryBuilder("users")
+    // .where("users.name = :search",{name:payload.name})
+    // .getMany();
+
+    return this.repository
+      .createQueryBuilder("users")
       .where(
-        `LOWER(user.name) LIKE :query 
-      OR LOWER(user.email) LIKE :query`,
-        { query: `%${query.toLowerCase()}%` }
+        `users.name ILIKE :name
+      OR users.email ILIKE :name
+      `,
+        { name: `%${payload.name}%` }
       )
       .getMany();
   }
 }
+
 
 export { UserRepository };
