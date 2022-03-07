@@ -14,7 +14,8 @@ interface IUserRepository {
   findByUserName: (payload: IFindByUserNameDTO) => Promise<User>;
   updateUser: (id: string,payload: IUpdateUserDTO) => Promise<Partial<User>>
   deleteUser: (payload: IDeleteUserDTO) => Promise<void>
-  findByNameAndEmail: (payload: IFindByNameAndEmailDTO) => Promise<User[]>;
+  findByNameAndEmail: (payload: IFindByNameAndEmailDTO) => Promise<User[]>
+  getAll: () => Promise<User[]>
 }
 
 export { IUserRepository };

@@ -5,6 +5,7 @@ import { celebrate, Joi, Segments } from "celebrate";
 import { UpdateUserController } from "./controllers/UpdateUserController";
 import { DeleteUserController } from "./controllers/DeleteUserController";
 import { GetUserByNameAndEmailController } from "./controllers/GetUserByNameAndEmailController";
+import {  GetAllUsersController} from "./controllers/GetAllUsersController";
 
 const routes = Router();
 
@@ -27,5 +28,6 @@ routes.get("/users/:id", new GetUserByIdController().handle);
 routes.put("/users/update/:id", new UpdateUserController().handle);
 routes.delete("/users/delete/:id", new DeleteUserController().handle);
 routes.get("/users", new GetUserByNameAndEmailController().handle);
+routes.get("/user", new GetAllUsersController().handle);
 
 export { routes };

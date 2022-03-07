@@ -10,6 +10,9 @@ import { IDeleteUserDTO } from "../../dtos/IDeleteUserDTO";
 import { IFindByNameAndEmailDTO } from "../../dtos/IFindByNameAndEmailDTO";
 
 class UserRepository implements IUserRepository {
+  find() {
+      throw new Error("Method not implemented.");
+  }
   private repository: Repository<User>;
 
   constructor() {
@@ -71,7 +74,7 @@ class UserRepository implements IUserRepository {
 
   async findByNameAndEmail(payload: IFindByNameAndEmailDTO): Promise<User[]> {
 
-     //retorna todos
+     //retorna todos 
     // return await this.repository
     // .createQueryBuilder("users")
     // .where("users.name = :search",{name:payload.name})
@@ -87,6 +90,14 @@ class UserRepository implements IUserRepository {
       )
       .getMany();
   }
+
+  async getAll(): Promise<User[]> {
+
+    return await this.repository.find()
+
+  }
+ 
+
 }
 
 

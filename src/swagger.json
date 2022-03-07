@@ -16,6 +16,31 @@
         }
     ],
     "paths": {
+        "/user": {
+            "get": {
+                "summary": "Get All users",
+                "description": "This route is reponsible for get all users in the database",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/users": {
             "post": {
                 "summary": "Create User",
@@ -205,6 +230,7 @@
                 }
             }
         }
+        
     },
     "components": {
         "schemas": {
