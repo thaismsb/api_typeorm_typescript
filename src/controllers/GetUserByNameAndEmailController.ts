@@ -1,11 +1,9 @@
 import { Request, Response } from "express";
-import { StringSchema } from "joi";
 import { GetUserByNameAndEmailUseCase } from "../usecases/GetUserByNameAndEmailUseCase";
 
 class GetUserByNameAndEmailController {
   async handle(request: Request, response: Response) {
     const name = request.query.name as unknown as string
-    const email = request.query.email
 
     const userbynameandemail = new GetUserByNameAndEmailUseCase();
 
