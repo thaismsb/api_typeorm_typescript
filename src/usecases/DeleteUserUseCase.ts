@@ -1,6 +1,5 @@
-import { IDeleteUserDTO } from "../dtos/IDeleteUserDTO";
-import { UserRepository } from "../repositories/implementations/UserRepository";
-import { User } from "../entities/User";
+import { IDeleteUserDTO } from "../dtos/IDeleteUserDTO"
+import { UserRepository } from "../repositories/implementations/UserRepository"
 export class DeleteUserUseCase {
   async execute({ id }: IDeleteUserDTO): Promise<void | Error> {
     const userRepository = new UserRepository();
@@ -8,10 +7,9 @@ export class DeleteUserUseCase {
     const idValidation = await userRepository.findById({ id });
 
     if (!idValidation) {
-      return new Error("User does not exists");
+      throw new Error("User does not exists");
     }
-    return userRepository.deleteUser({id});
 
-    
+    return userRepository.deleteUser({ id });
   }
 }

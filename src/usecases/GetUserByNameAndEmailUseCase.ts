@@ -1,6 +1,6 @@
-import { IFindByNameAndEmailDTO } from "../dtos/IFindByNameAndEmailDTO";
-import { User } from "../entities/User";
-import { UserRepository } from "../repositories/implementations/UserRepository";
+import { IFindByNameAndEmailDTO } from "../dtos/IFindByNameAndEmailDTO"
+import { User } from "../entities/User"
+import { UserRepository } from "../repositories/implementations/UserRepository"
 
 export class GetUserByNameAndEmailUseCase {
   async execute({ name}: IFindByNameAndEmailDTO): Promise<User[] | Error> {
@@ -9,7 +9,7 @@ export class GetUserByNameAndEmailUseCase {
     const search = await userRepository.findByNameAndEmail({ name });
 
     if (!search) {
-      return new Error("No results found");
+      throw new Error("No results found");
     }
 
     return search;
