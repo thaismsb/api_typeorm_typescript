@@ -1,6 +1,6 @@
-import { IUpdateUserDTO } from "../dtos/IUpdateUserDTO"
-import { User } from "../entities/User"
-import { UserRepository } from "../repositories/implementations/UserRepository"
+import { IUpdateUserDTO } from "../dtos/IUpdateUserDTO";
+import { User } from "../entities/User";
+import { UserRepository } from "../repositories/implementations/UserRepository";
 
 export class UpdateUserUseCaseOriginal {
   async execute({
@@ -9,7 +9,7 @@ export class UpdateUserUseCaseOriginal {
     email,
     birthDate,
     userName,
-  }: IUpdateUserDTO): Promise<Partial<User> | Error> {
+  }: IUpdateUserDTO): Promise<Partial<User>> {
     const userRepository = new UserRepository();
 
     const idValidation = await userRepository.findById({ id });

@@ -1,3 +1,4 @@
 import { createConnection } from "typeorm";
+export default async () => createConnection();
 
-createConnection();
+// createConnection();

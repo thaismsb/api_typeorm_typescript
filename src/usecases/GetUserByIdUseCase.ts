@@ -3,7 +3,7 @@ import { User } from "../entities/User"
 import { UserRepository } from "../repositories/implementations/UserRepository"
 
 export class GetUserByIdUseCase {
-  async execute({ id }: IFindByIdDTO): Promise<User | Error> {
+  async execute({ id }: IFindByIdDTO): Promise<User> {
 
     const userRepository = new UserRepository();
 

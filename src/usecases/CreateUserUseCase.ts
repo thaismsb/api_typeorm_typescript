@@ -15,7 +15,7 @@ export class CreateUserUseCase {
     email,
     birthDate,
     userName,
-  }: ICreateUserDTO): Promise<User | Error> {
+  }: ICreateUserDTO): Promise<User> {
     const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     if (!reg.test(email)) {
       throw new Error("Email is not valid");

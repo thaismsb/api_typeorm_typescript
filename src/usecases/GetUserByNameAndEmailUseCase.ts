@@ -3,7 +3,7 @@ import { User } from "../entities/User"
 import { UserRepository } from "../repositories/implementations/UserRepository"
 
 export class GetUserByNameAndEmailUseCase {
-  async execute({ name}: IFindByNameAndEmailDTO): Promise<User[] | Error> {
+  async execute({ name}: IFindByNameAndEmailDTO): Promise<User[]> {
     const userRepository = new UserRepository();
 
     const search = await userRepository.findByNameAndEmail({ name });
