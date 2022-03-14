@@ -10,13 +10,10 @@ const swaggerUi = require("swagger-ui-express");
 const app = express();
 const errorHandler = (err, req, res, next) => {
   if (err instanceof Error) {
-    console.log("ERROR 123");
     return res.status(500).json({
       message: err.message,
     });
   }
-
-  console.log("ERROR 321");
 };
 
 app.use(express.json());
