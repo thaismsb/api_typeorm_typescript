@@ -5,9 +5,10 @@ import { celebrate, Joi, Segments } from "celebrate";
 import { UpdateUserController } from "./controllers/UpdateUserController";
 import { DeleteUserController } from "./controllers/DeleteUserController";
 import { GetUserByNameAndEmailController } from "./controllers/GetUserByNameAndEmailController";
-import {  GetAllUsersController} from "./controllers/GetAllUsersController";
+import { GetAllUsersController } from "./controllers/GetAllUsersController";
 
 const routes = Router();
+const createUserController = new CreateUserController();
 
 routes.post(
   "/users",
@@ -21,7 +22,7 @@ routes.post(
       userName: Joi.string().required().min(5),
     }),
   }),
-  new CreateUserController().handle
+  createUserController.handleBody.bind(createUserController)
 );
 
 routes.get("/users/:id", new GetUserByIdController().handle);

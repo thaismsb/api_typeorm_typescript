@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import express from "express";
+import "./container";
 import "./database";
 import { routes } from "./routes";
 const swaggerUi = require("swagger-ui-express");
