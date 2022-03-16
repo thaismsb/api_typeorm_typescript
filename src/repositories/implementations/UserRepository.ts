@@ -25,19 +25,19 @@ class UserRepository implements IUserRepository {
   }
 
   async findById(payload: IFindByIdDTO): Promise<User> {
-    return await this.repository.findOne({
+    return this.repository.findOne({
       id: payload.id,
     });
   }
 
   async findByEmail(payload: IFindByEmailDTO): Promise<User> {
-    return await this.repository.findOne({
+    return this.repository.findOne({
       email: payload.email,
     });
   }
 
   async findByUserName(payload: IFindByUserNameDTO): Promise<User> {
-    return await this.repository.findOne({
+    return this.repository.findOne({
       userName: payload.userName,
     });
   }
@@ -70,12 +70,6 @@ class UserRepository implements IUserRepository {
   }
 
   async findByNameAndEmail(payload: IFindByNameAndEmailDTO): Promise<User[]> {
-    //retorna todos
-    // return await this.repository
-    // .createQueryBuilder("users")
-    // .where("users.name = :search",{name:payload.name})
-    // .getMany();
-
     return this.repository
       .createQueryBuilder("users")
       .where(
@@ -88,7 +82,7 @@ class UserRepository implements IUserRepository {
   }
 
   async getAll(): Promise<User[]> {
-    return await this.repository.find();
+    return this.repository.find();
   }
 }
 

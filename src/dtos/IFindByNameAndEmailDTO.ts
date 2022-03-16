@@ -1,7 +1,5 @@
-
 type IFindByNameAndEmailDTO = {
- name:string
-
+  name: string;
 };
 
 export { IFindByNameAndEmailDTO };

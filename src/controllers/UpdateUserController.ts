@@ -1,25 +1,20 @@
-import { Request, Response } from "express";
-import {UpdateUserUseCaseOriginal} from "../usecases/UpdateUserUseCaseOriginal"
+import { container } from "tsyringe";
+import { UpdateUserUseCaseOriginal } from "../usecases/UpdateUserUseCaseOriginal";
+import { Controller } from "../Classes/Controller";
+import { IUpdateUserDTO } from "~/dtos/IUpdateUserDTO";
+import { IFindByIdDTO } from "~/dtos/IFindByIdDTO";
 
-class UpdateUserController {
-  async handle(request: Request, response: Response) {
-    const { id } = request.params;
-    const { name, email, birthDate, userName } = request.body;
-
-    const updateuser = new UpdateUserUseCaseOriginal();
-
-    const result = await updateuser.execute({
-      id,
-      name,
-      email,
-      birthDate,
-      userName,
+class UpdateUserController extends Controller {
+  async exec(params: IFindByIdDTO, payload: IUpdateUserDTO) {
+    const updateUserUseCaseOriginal = container.resolve(
+      UpdateUserUseCaseOriginal
+    );
+    const updatedUser = await updateUserUseCaseOriginal.execute({
+      ...params,
+      ...payload,
     });
 
-    if (result instanceof Error) {
-      return response.status(400).json(result.message);
-    }
-    return response.json(result);
+    return updatedUser;
   }
 }
 

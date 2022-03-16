@@ -1,17 +1,20 @@
-import { IFindByIdDTO } from "../dtos/IFindByIdDTO"
-import { User } from "../entities/User"
-import { UserRepository } from "../repositories/implementations/UserRepository"
-
+import { inject, injectable } from "tsyringe";
+import { IUserRepository } from "~/repositories/IUserRepository";
+import { AppError } from "~/Classes/AppError";
+@injectable()
 export class GetUserByIdUseCase {
-  async execute({ id }: IFindByIdDTO): Promise<User> {
+  constructor(
+    @inject("UserRepository")
+    private userRepository: IUserRepository
+  ) {}
 
-    const userRepository = new UserRepository();
+  async execute(id: string) {
+    const user = await this.userRepository.findById({ id });
 
-    const idValidation = await userRepository.findById({ id });
-
-    if (!idValidation) {
-      throw new Error("User does not exists");
+    if (!user) {
+      throw new AppError("User does not exists", 404);
     }
-    return idValidation;
+
+    return user;
   }
 }

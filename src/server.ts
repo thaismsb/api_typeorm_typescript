@@ -7,14 +7,16 @@ import express from "express";
 
 import dbConnection from "./database";
 import { routes } from "./routes";
+import { AppError } from "./Classes/AppError";
 
 const app = express();
 const port = process.env.PORT || 2016;
 
 const errorHandler = (err, req, res, next) => {
-  if (err instanceof Error) {
-    return res.status(500).json({
-      message: err.message || "Internal Server Error: no message provided",
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({
+      message: err.message,
+      generationDate: err.getDate(),
     });
   }
   next();

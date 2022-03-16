@@ -42,8 +42,9 @@ abstract class Controller {
   //   return res.status(this.statusCode).json(result);
   // }
 
+  //
   async handleParamsBody(req: Request, res: Response): Promise<Response> {
-    const result = await this.exec(req.query, req.body);
+    const result = await this.exec(req.params, req.body);
 
     return res.status(this.statusCode).json(result);
   }

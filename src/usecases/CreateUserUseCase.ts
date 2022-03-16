@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "~/Classes/AppError";
 import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
 import { User } from "../entities/User";
 import { IUserRepository } from "../repositories/IUserRepository";
@@ -18,13 +19,13 @@ export class CreateUserUseCase {
   }: ICreateUserDTO): Promise<User> {
     const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     if (!reg.test(email)) {
-      throw new Error("Email is not valid");
+      throw new AppError("Email is not valid", 400);
     }
 
     const emailValidation = await this.userRepository.findByEmail({ email });
 
     if (emailValidation) {
-      throw new Error("Email already exists");
+      throw new AppError("Email already exists", 400);
     }
 
     const userNameValidation = await this.userRepository.findByUserName({
@@ -32,7 +33,7 @@ export class CreateUserUseCase {
     });
 
     if (userNameValidation) {
-      throw new Error("UserName already exists");
+      throw new AppError("UserName already exists");
     }
 
     return this.userRepository.createUser({

@@ -1,15 +1,22 @@
-import { IDeleteUserDTO } from "../dtos/IDeleteUserDTO"
-import { UserRepository } from "../repositories/implementations/UserRepository"
+import { inject, injectable } from "tsyringe";
+import { IUserRepository } from "~/repositories/IUserRepository";
+import { AppError } from "~/Classes/AppError";
+@injectable()
 export class DeleteUserUseCase {
-  async execute({ id }: IDeleteUserDTO): Promise<void> {
-    const userRepository = new UserRepository();
+  constructor(
+    @inject("UserRepository")
+    private userRepository: IUserRepository
+  ) {}
 
-    const idValidation = await userRepository.findById({ id });
+  async execute(id: string) {
+    const idValidation = await this.userRepository.findById({ id });
 
     if (!idValidation) {
-      throw new Error("User does not exists");
+      throw new AppError("User does not exists", 404);
     }
 
-    return userRepository.deleteUser({ id });
+    await this.userRepository.deleteUser({ id });
+
+    return idValidation;
   }
 }

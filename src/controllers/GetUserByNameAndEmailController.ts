@@ -1,18 +1,16 @@
-import { Request, Response } from "express";
+import { container } from "tsyringe";
 import { GetUserByNameAndEmailUseCase } from "../usecases/GetUserByNameAndEmailUseCase";
+import { Controller } from "../Classes/Controller";
+import { IFindByNameAndEmailDTO } from "~/dtos/IFindByNameAndEmailDTO";
 
-class GetUserByNameAndEmailController {
-  async handle(request: Request, response: Response) {
-    const name = request.query.name as unknown as string
+class GetUserByNameAndEmailController extends Controller {
+  async exec(payload: IFindByNameAndEmailDTO) {
+    const name = payload;
 
-    const userbynameandemail = new GetUserByNameAndEmailUseCase();
-
-    const result = await userbynameandemail.execute({name});
-
-    if (result instanceof Error) {
-      return response.status(400).json(result.message);
-    }
-    return response.json(result);
+    const getUserByNameAndEmailUseCase = container.resolve(
+      GetUserByNameAndEmailUseCase
+    );
+    return getUserByNameAndEmailUseCase.execute(name);
   }
 }
 

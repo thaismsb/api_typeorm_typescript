@@ -4,11 +4,16 @@ import { GetUserByIdController } from "./controllers/GetUserByIdController";
 import { celebrate, Joi, Segments } from "celebrate";
 import { UpdateUserController } from "./controllers/UpdateUserController";
 import { DeleteUserController } from "./controllers/DeleteUserController";
-import { GetUserByNameAndEmailController } from "./controllers/GetUserByNameAndEmailController";
 import { GetAllUsersController } from "./controllers/GetAllUsersController";
+import { GetUserByNameAndEmailController } from "./controllers/GetUserByNameAndEmailController";
 
 const routes = Router();
 const createUserController = new CreateUserController();
+const deleteUserController = new DeleteUserController();
+const getAllUsersController = new GetAllUsersController();
+const getUserByIdController = new GetUserByIdController();
+const getUserByNameAndEmailController = new GetUserByNameAndEmailController();
+const updateUserController = new UpdateUserController();
 
 routes.post(
   "/users",
@@ -25,10 +30,31 @@ routes.post(
   createUserController.handleBody.bind(createUserController)
 );
 
-routes.get("/users/:id", new GetUserByIdController().handle);
-routes.put("/users/update/:id", new UpdateUserController().handle);
-routes.delete("/users/delete/:id", new DeleteUserController().handle);
-routes.get("/users", new GetUserByNameAndEmailController().handle);
-routes.get("/user", new GetAllUsersController().handle);
+routes.get(
+  "/users/:id",
+  getUserByIdController.handleRouteParams.bind(getUserByIdController)
+);
+
+routes.put(
+  "/users/update/:id",
+  updateUserController.handleParamsBody.bind(updateUserController)
+);
+
+routes.delete(
+  "/users/delete/:id",
+  deleteUserController.handleRouteParams.bind(deleteUserController)
+);
+
+routes.get(
+  "/users",
+  getUserByNameAndEmailController.handleQuery.bind(
+    getUserByNameAndEmailController
+  )
+);
+
+routes.get(
+  "/user",
+  getAllUsersController.handleBody.bind(getAllUsersController)
+);
 
 export { routes };

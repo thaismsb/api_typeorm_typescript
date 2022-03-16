@@ -1,18 +1,15 @@
-import { Request, Response } from "express";
-import { GetUserByIdUseCase } from "../usecases/GetUserByIdUseCase";
+import { container } from "tsyringe";
+import { GetUserByIdUseCase } from "~/usecases/GetUserByIdUseCase";
+import { Controller } from "../Classes/Controller";
+import { IFindByIdDTO } from "../dtos/IFindByIdDTO";
 
-class GetUserByIdController {
-  async handle(request: Request, response: Response) {
-    const { id } = request.params;
+class GetUserByIdController extends Controller {
+  async exec(payload: IFindByIdDTO) {
+    const { id } = payload;
 
-    const userbyid = new GetUserByIdUseCase();
+    const getUserByIdUseCase = container.resolve(GetUserByIdUseCase);
 
-    const result = await userbyid.execute({ id });
-
-    if (result instanceof Error) {
-      return response.status(400).json(result.message);
-    }
-    return response.json(result);
+    return getUserByIdUseCase.execute(id);
   }
 }
 

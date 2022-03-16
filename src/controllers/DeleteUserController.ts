@@ -1,18 +1,14 @@
-import { Request, Response } from "express";
+import { container } from "tsyringe";
 import { DeleteUserUseCase } from "../usecases/DeleteUserUseCase";
+import { Controller } from "../Classes/Controller";
+import { IDeleteUserDTO } from "../dtos/IDeleteUserDTO";
 
-class DeleteUserController {
-  async handle(request: Request, response: Response) {
-    const { id } = request.params;
+class DeleteUserController extends Controller {
+  async exec(payload: IDeleteUserDTO) {
+    const { id } = payload;
+    const deleteUserUseCase = container.resolve(DeleteUserUseCase);
 
-    const deleteuser = new DeleteUserUseCase();
-
-    const result = await deleteuser.execute({ id });
-
-    if (result instanceof Error) {
-      return response.status(400).json(result.message);
-    }
-    return response.status(204).end();
+    return deleteUserUseCase.execute(id);
   }
 }
 

@@ -1,15 +1,21 @@
-import { IFindByNameAndEmailDTO } from "../dtos/IFindByNameAndEmailDTO"
-import { User } from "../entities/User"
-import { UserRepository } from "../repositories/implementations/UserRepository"
+import { inject, injectable } from "tsyringe";
+import { IUserRepository } from "~/repositories/IUserRepository";
+import { AppError } from "~/Classes/AppError";
+import { IFindByNameAndEmailDTO } from "../dtos/IFindByNameAndEmailDTO";
+import { User } from "~/entities/User";
 
+@injectable()
 export class GetUserByNameAndEmailUseCase {
-  async execute({ name}: IFindByNameAndEmailDTO): Promise<User[]> {
-    const userRepository = new UserRepository();
+  constructor(
+    @inject("UserRepository")
+    private userRepository: IUserRepository
+  ) {}
 
-    const search = await userRepository.findByNameAndEmail({ name });
+  async execute({ name }: IFindByNameAndEmailDTO): Promise<User[]> {
+    const search = await this.userRepository.findByNameAndEmail({ name });
 
     if (!search) {
-      throw new Error("No results found");
+      throw new AppError("No results found");
     }
 
     return search;

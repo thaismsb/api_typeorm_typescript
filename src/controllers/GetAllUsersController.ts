@@ -1,14 +1,12 @@
-import { Request, Response } from "express";
-import { GetAllUsersUseCase } from "../usecases/getAllUsersUseCase";
+import { container } from "tsyringe";
+import { GetAllUsersUseCase } from "../usecases/GetAllUsersUseCase";
+import { Controller } from "../Classes/Controller";
 
-class GetAllUsersController{
-  async handle(request: Request, response: Response) {
-    const getall = new GetAllUsersUseCase();
+class GetAllUsersController extends Controller {
+  async exec() {
+    const getAllUsersUseCase = container.resolve(GetAllUsersUseCase);
 
-    const result = await getall.execute();
-
-    return response.json(result);
+    return getAllUsersUseCase.execute();
   }
 }
-
 export { GetAllUsersController };

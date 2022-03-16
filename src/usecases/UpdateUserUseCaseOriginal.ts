@@ -1,8 +1,15 @@
+import { inject, injectable } from "tsyringe";
+import { IUserRepository } from "~/repositories/IUserRepository";
+import { AppError } from "~/Classes/AppError";
 import { IUpdateUserDTO } from "../dtos/IUpdateUserDTO";
 import { User } from "../entities/User";
-import { UserRepository } from "../repositories/implementations/UserRepository";
 
+@injectable()
 export class UpdateUserUseCaseOriginal {
+  constructor(
+    @inject("UserRepository")
+    private userRepository: IUserRepository
+  ) {}
   async execute({
     id,
     name,
@@ -10,15 +17,13 @@ export class UpdateUserUseCaseOriginal {
     birthDate,
     userName,
   }: IUpdateUserDTO): Promise<Partial<User>> {
-    const userRepository = new UserRepository();
+    const user = await this.userRepository.findById({ id });
 
-    const idValidation = await userRepository.findById({ id });
-
-    if (!idValidation) {
-      throw new Error("User does not exists");
+    if (!user) {
+      throw new AppError("User does not exists");
     }
 
-    return await userRepository.updateUser(id, {
+    return this.userRepository.updateUser(id, {
       id,
       name,
       email,
@@ -27,17 +32,3 @@ export class UpdateUserUseCaseOriginal {
     });
   }
 }
-
-// const updateuser = await getRepository(User).findOne({ id });
-// if (!updateuser) {
-//   throw new Error("User does not exists");
-// }
-
-// updateuser.name = name ? name : updateuser.name;
-// updateuser.email = email ? email : updateuser.email;
-// updateuser.birthDate = birthDate ? birthDate : updateuser.birthDate;
-// updateuser.userName = userName ? userName : updateuser.userName;
-
-// await getRepository(User).save(updateuser);
-
-// return updateuser;
