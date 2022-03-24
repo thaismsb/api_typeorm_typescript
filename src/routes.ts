@@ -19,18 +19,18 @@ routes.post(
   "/users",
   celebrate({
     [Segments.BODY]: Joi.object().keys({
-      name: Joi.string().required().min(3),
+      name: Joi.string().min(3).required(),
       email: Joi.string()
-        .required()
         .pattern(new RegExp(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/))
-        // .messages({
-        //   "string.pattern.base": "Invalid email",
-        // }),
-        .error(new Error("email inválido")),
+        .messages({
+          "string.pattern.base": "Invalid email",
+        })
+        .required(),
+      // .error(new Error("email inválido")),
       birthDate: Joi.date().max("01-01-2015").iso().messages({
         "date.format": `Date format is YYYY-MM-DD`,
       }),
-      userName: Joi.string().required().min(5),
+      userName: Joi.string().min(5).required(),
     }),
   }),
   createUserController.handleBody.bind(createUserController)
