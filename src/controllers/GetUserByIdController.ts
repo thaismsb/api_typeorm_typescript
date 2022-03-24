@@ -1,5 +1,5 @@
 import { container } from "tsyringe";
-import { GetUserByIdUseCase } from "~/usecases/GetUserByIdUseCase";
+import { GetUserByIdUseCase } from "../usecases/GetUserByIdUseCase";
 import { Controller } from "../Classes/Controller";
 import { IFindByIdDTO } from "../dtos/IFindByIdDTO";
 

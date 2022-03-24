@@ -8,6 +8,7 @@ import express from "express";
 import dbConnection from "./database";
 import { routes } from "./routes";
 import { AppError } from "./Classes/AppError";
+import { errors } from "celebrate";
 
 const app = express();
 const port = process.env.PORT || 2016;
@@ -25,6 +26,7 @@ const errorHandler = (err, req, res, next) => {
 app.use(express.json());
 app.use(routes);
 app.use(errorHandler);
+app.use(errors());
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(require("./swagger.json")));
 

@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { IUserRepository } from "~/repositories/IUserRepository";
-import { AppError } from "~/Classes/AppError";
+import { IUserRepository } from "../repositories/IUserRepository";
+import { AppError } from "../Classes/AppError";
+import { User } from "~/entities/User";
 @injectable()
 export class GetUserByIdUseCase {
   constructor(

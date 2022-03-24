@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { IUserRepository } from "~/repositories/IUserRepository";
-import { User } from "~/entities/User";
+import { IUserRepository } from "../repositories/IUserRepository";
+import { User } from "../entities/User";
 @injectable()
 export class GetAllUsersUseCase {
   constructor(
@@ -9,6 +9,8 @@ export class GetAllUsersUseCase {
   ) {}
 
   async execute(): Promise<User[]> {
-    return this.userRepository.getAll();
+    const users = await this.userRepository.getAll();
+
+    return users;
   }
 }

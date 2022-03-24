@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IUserRepository } from "~/repositories/IUserRepository";
-import { AppError } from "~/Classes/AppError";
+import { IUserRepository } from "../repositories/IUserRepository";
+import { AppError } from "../Classes/AppError";
 import { IFindByNameAndEmailDTO } from "../dtos/IFindByNameAndEmailDTO";
-import { User } from "~/entities/User";
+import { User } from "../entities/User";
 
 @injectable()
 export class GetUserByNameAndEmailUseCase {

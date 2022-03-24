@@ -20,7 +20,13 @@ routes.post(
   celebrate({
     [Segments.BODY]: Joi.object().keys({
       name: Joi.string().required().min(3),
-      email: Joi.string().required(),
+      email: Joi.string()
+        .required()
+        .pattern(new RegExp(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/))
+        // .messages({
+        //   "string.pattern.base": "Invalid email",
+        // }),
+        .error(new Error("email inválido")),
       birthDate: Joi.date().max("01-01-2015").iso().messages({
         "date.format": `Date format is YYYY-MM-DD`,
       }),

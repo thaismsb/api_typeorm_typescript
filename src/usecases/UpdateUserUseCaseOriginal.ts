@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { IUserRepository } from "~/repositories/IUserRepository";
-import { AppError } from "~/Classes/AppError";
+import { IUserRepository } from "../repositories/IUserRepository";
+import { AppError } from "../Classes/AppError";
 import { IUpdateUserDTO } from "../dtos/IUpdateUserDTO";
 import { User } from "../entities/User";
 
@@ -23,12 +23,18 @@ export class UpdateUserUseCaseOriginal {
       throw new AppError("User does not exists");
     }
 
-    return this.userRepository.updateUser(id, {
+    const updatedUser = await this.userRepository.updateUser(id, {
       id,
       name,
       email,
       birthDate,
       userName,
     });
+
+    if (!updatedUser) {
+      throw new AppError("Ocorreu um problema ao cadastrar o usuárioq", 400);
+    }
+
+    return updatedUser;
   }
 }

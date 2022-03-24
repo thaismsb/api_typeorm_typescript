@@ -1,5 +1,6 @@
+import "../container";
 import { inject, injectable } from "tsyringe";
-import { AppError } from "~/Classes/AppError";
+import { AppError } from "../Classes/AppError";
 import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
 import { User } from "../entities/User";
 import { IUserRepository } from "../repositories/IUserRepository";
@@ -17,6 +18,7 @@ export class CreateUserUseCase {
     birthDate,
     userName,
   }: ICreateUserDTO): Promise<User> {
+    //tirar daqui
     const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     if (!reg.test(email)) {
       throw new AppError("Email is not valid", 400);
@@ -36,11 +38,16 @@ export class CreateUserUseCase {
       throw new AppError("UserName already exists");
     }
 
-    return this.userRepository.createUser({
+    const savedUser = await this.userRepository.createUser({
       name,
       email,
       birthDate,
       userName,
     });
+
+    if (savedUser) {
+      return savedUser;
+    }
+    throw new AppError("Ocorreu um problema ao cadastrar o usuário", 400);
   }
 }

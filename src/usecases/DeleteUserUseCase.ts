@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { IUserRepository } from "~/repositories/IUserRepository";
-import { AppError } from "~/Classes/AppError";
+import { IUserRepository } from "../repositories/IUserRepository";
+import { AppError } from "../Classes/AppError";
 @injectable()
 export class DeleteUserUseCase {
   constructor(

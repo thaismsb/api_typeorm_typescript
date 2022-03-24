@@ -1,7 +1,7 @@
 import { container } from "tsyringe";
 import { GetUserByNameAndEmailUseCase } from "../usecases/GetUserByNameAndEmailUseCase";
 import { Controller } from "../Classes/Controller";
-import { IFindByNameAndEmailDTO } from "~/dtos/IFindByNameAndEmailDTO";
+import { IFindByNameAndEmailDTO } from "../dtos/IFindByNameAndEmailDTO";
 
 class GetUserByNameAndEmailController extends Controller {
   async exec(payload: IFindByNameAndEmailDTO) {
